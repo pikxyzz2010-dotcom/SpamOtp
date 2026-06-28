@@ -36,6 +36,6 @@ The Reaper adalah tools termux yang dikembangkan untuk spam otp
 pkg update && pkg upgrade
 pkg install python
 pip install requests
-git clone https://github.com/[username]/[repo-name].git
-cd [repo-name]
-chmod +x TheReaper.py
+git clone https://github.com/pikxyzz2010-dotcom/SpamOtp
+cd SpamOtp
+chmod +x main.py
