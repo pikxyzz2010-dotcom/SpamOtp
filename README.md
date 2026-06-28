@@ -38,4 +38,4 @@ pkg install python
 pip install requests
 git clone https://github.com/pikxyzz2010-dotcom/SpamOtp
 cd SpamOtp
-chmod +x main.py
+chmod +x Reaper.py
