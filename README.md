@@ -1,4 +1,8 @@
 <p align="center">
+  <img src="tampilan.jpg" alt="Tampilan" width="600">
+</p>
+
+<p align="center">
   <img src="https://img.shields.io/badge/THE%20REAPER-OTP%20ENGINE-red?style=for-the-badge&logo=python" />
   <img src="https://img.shields.io/badge/Platform-Termux-blue?style=for-the-badge&logo=android" />
   <img src="https://img.shields.io/badge/Version-3.0-brightgreen?style=for-the-badge" />
