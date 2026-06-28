@@ -9,37 +9,33 @@
 </p>
 
 <h1 align="center">☠️ THE REAPER v3.0</h1>
-<p align="center"><i>"Siapa bilang tools OTP harus ribet? THE REAPER datang untuk menghancurkan batasan."</i></p>
+<p align="center"><i>"OP Tools! THE REAPER."</i></p>
 
 ---
 
-## 🚀 Apa Itu THE REAPER?
+## 🩸 Apa Itu THE REAPER?
 
-THE REAPER adalah **OTP Spam Engine** berbasis Python untuk Termux/Android.  
-Dengan **10+ API terintegrasi**
-
+The Reaper adalah tools termux yang dikembangkan untuk spam otp 
 ---
 
-## ✨ Fitur Unggulan
+## 🕯️ Fitur Kegelapan
 
-| 🛠️ | Deskripsi |
+| 🩸 | Deskripsi |
 |----|-----------|
-| ⚡ | **10+ API Aktif** (Pinhome, Tokopedia, Halodoc, Kredit Pintar, dll.) |
-| 🔒 | **Verifikasi ID via JSONBin** (tambah/hapus user real-time) |
-| 🛡️ | **Admin Panel** (kelola user dengan mudah) |
-| 📱 | **UI Responsif** (dioptimalkan untuk layar HP Termux) |
-| 🔐 | **Encrypt Proteksi** (XOR + Zlib + Double Base64) |
-| 🧠 | **Session Lock** (mencegah multi-sesi) |
-| ⏳ | **Auto Countdown** (jeda spam otomatis) |
+| ⚰️ | **10+ otp **  |
+| 📱 | **UI Responsif** — diperuntukkan bagi layar sempit Termux |
+| 🔐 | **Encrypt Proteksi** — mereka yang mencoba membongkar akan tersesat |
+| 🧠 | **Session Lock** — tak ada dua Reaper yang boleh berkeliaran |
+| 👿 | **Auto Countdown** — waktu tunggu sebelum serangan berikutnya |
 
 ---
 
-## 📦 Instalasi
+## ⚰️ Instalasi
 
 ```bash
 pkg update && pkg upgrade
 pkg install python
 pip install requests
-git clone https://github.com/pikxyzz2010-dotcom/SpamOtp
-cd SpamOtp
+git clone https://github.com/[username]/[repo-name].git
+cd [repo-name]
 chmod +x TheReaper.py
