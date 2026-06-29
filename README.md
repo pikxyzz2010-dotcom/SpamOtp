@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="tampilan.png" alt="Tampilan" width="600">
+  <img src="tampilan.jpg" alt="Tampilan" width="600">
 </p>
 
 <p align="center">
