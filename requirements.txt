@@ -1,0 +1,27 @@
+# ============================================================
+# THE RIPPER - SYSTEM & PYTHON DEPENDENCIES
+# ============================================================
+# ============================================================
+# 1. SYSTEM PACKAGES (Install via pkg)
+# ============================================================
+pkg:git
+pkg:python
+pkg:nano
+pkg:curl
+pkg:wget
+
+# ============================================================
+# 2. PYTHON MODULES (Install via pip)
+# ============================================================
+requests
+flask
+urllib3
+setuptools
+pip
+
+# ============================================================
+# 3. OPTIONAL (Biar lebih nyaman)
+# ============================================================
+# pkg:openssh        # Buat akses remote (kalau perlu)
+# pkg:tree           # Buat liat struktur folder
+# pkg:htop           # Buat monitor CPU
