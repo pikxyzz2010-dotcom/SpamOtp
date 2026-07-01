@@ -22,7 +22,7 @@ The Reaper adalah tools termux yang dikembangkan untuk spam otp
 
 | 🩸 | Deskripsi |
 |----|-----------|
-| ⚰️ | **10+ otp **  |
+| ⚰️ | **17 otp **  |
 | 📱 | **UI Responsif** — diperuntukkan bagi layar sempit Termux |
 | 🔐 | **Encrypt Proteksi** — mereka yang mencoba membongkar akan tersesat |
 | 🧠 | **Session Lock** — tak ada dua Reaper yang boleh berkeliaran |
@@ -34,10 +34,8 @@ The Reaper adalah tools termux yang dikembangkan untuk spam otp
 
 ```bash
 pkg update && pkg upgrade
-pip install git
-pkg install python
-pip install requests
+pkg install git python nano -y
 pip install requests urllib3 flask
-git clone https://github.com/pikxyzz2010-dotcom/SpamOtp
+git clone https://github.com/pikxyzz2/SpamOtp
 cd SpamOtp
 make run
