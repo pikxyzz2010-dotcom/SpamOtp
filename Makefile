@@ -1,110 +1,195 @@
-SHELL = /bin/bash
-PYTHON = python3
-TARGET = Ripper.py
+import subprocess
+import sys
+import os
+import threading
+import time
+import importlib.util
 
-RED   = \033[1;31m
-GREEN = \033[1;32m
-YELLOW= \033[1;33m
-BLUE  = \033[1;34m
-CYAN  = \033[1;36m
-WHITE = \033[1;37m
-RESET = \033[0m
+# ---- WARNA ----
+a = "\033[1;30m"
+m = "\033[1;31m"
+h = "\033[1;32m"
+k = "\033[1;33m"
+c = "\033[1;36m"
+p = "\033[1;37m"
+r = "\033[0m"
 
-.PHONY: run clean backup all fix_python
+# ---- DAFTAR PAKET ----
+PKG_PACKAGES = [
+    "python",
+    "clang",
+    "make",
+    "git",
+    "wget",
+    "libjpeg-turbo",
+    "termux-api",
+]
 
-# ---- DETEKSI & FIX PYTHON VERSI 3.14 OTOMATIS ----
-fix_python:
-	@echo -e "${YELLOW}[i] Checking Python version...${RESET}"
-	@PY_VER=$$(python3 --version 2>/dev/null | grep -o '3\.[0-9]*' | head -1); \
-	if [ "$$PY_VER" = "3.14" ]; then \
-		echo -e "${RED}[!] Detected Python 3.14 (unstable)! Fixing...${RESET}"; \
-		echo -e "${YELLOW}[i] Uninstalling Python 3.14...${RESET}"; \
-		pkg uninstall python -y 2>/dev/null || true; \
-		pkg uninstall python-pip -y 2>/dev/null || true; \
-		rm -rf /data/data/com.termux/files/usr/lib/python3.14 2>/dev/null || true; \
-		echo -e "${YELLOW}[i] Downloading Python 3.13.2 (aarch64)...${RESET}"; \
-		wget -q --show-progress https://packages.termux.dev/apt/termux-main/pool/main/p/python/python_3.13.2_aarch64.deb; \
-		echo -e "${YELLOW}[i] Installing Python 3.13.2...${RESET}"; \
-		dpkg -i python_3.13.2_aarch64.deb 2>/dev/null || true; \
-		pkg mark hold python 2>/dev/null || true; \
-		rm -f /data/data/com.termux/files/usr/bin/pip* 2>/dev/null || true; \
-		echo -e "${YELLOW}[i] Reinstalling pip...${RESET}"; \
-		python -m ensurepip --upgrade 2>/dev/null || true; \
-		echo -e "${GREEN}[✔] Fixed! Python version: $$(python --version 2>/dev/null)${RESET}"; \
-	else \
-		echo -e "${GREEN}[✔] Python $$PY_VER is stable. Skipping fix.${RESET}"; \
-	fi
-	@echo ""
+PIP_PACKAGES = [
+    ("requests", "requests"),
+    ("beautifulsoup4", "bs4"),
+    ("urllib3", "urllib3"),
+    ("rich", "rich"),
+    ("phonenumbers", "phonenumbers"),
+    ("pillow", "PIL"),
+    ("pycryptodome", "Crypto"),
+    ("colorama", "colorama"),
+]
 
-# ---- RUN UTAMA ----
-run: fix_python
-	@clear
-	@echo -e "${RED}"
-	@echo "     ████████╗██╗  ██╗███████╗    ██████╗ ██╗██████╗ ██████╗ ███████╗██████╗ "
-	@echo "     ╚══██╔══╝██║  ██║██╔════╝    ██╔══██╗██║██╔══██╗██╔══██╗██╔════╝██╔══██╗"
-	@echo "        ██║   ███████║█████╗      ██████╔╝██║██████╔╝██████╔╝█████╗  ██████╔╝"
-	@echo "        ██║   ██╔══██║██╔══╝      ██╔══██╗██║██╔═══╝ ██╔═══╝ ██╔══╝  ██╔══██╗"
-	@echo "        ██║   ██║  ██║███████╗    ██║  ██║██║██║     ██║     ███████╗██║  ██║"
-	@echo "        ╚═╝   ╚═╝  ╚═╝╚══════╝    ╚═╝  ╚═╝╚═╝╚═╝     ╚═╝     ╚══════╝╚═╝  ╚═╝"
-	@echo -e "${RESET}"
-	@echo -e "${CYAN}  ═══════════════════════════════════════════════════════════════════${RESET}"
-	@echo -e "${GREEN}  [✔] LAUNCHER V5.3 — ULTIMATE STABLE${RESET}"
-	@echo -e "${YELLOW}  [i] Target: ${TARGET}${RESET}"
-	@echo -e "${CYAN}  ═══════════════════════════════════════════════════════════════════${RESET}"
-	@echo ""
+# ---- UTILITIES ----
+def run(cmd, cwd=None):
+    return subprocess.run(
+        cmd,
+        capture_output=True,
+        text=True,
+        cwd=cwd
+    )
 
-	@echo -e "${BLUE}  [⏳] Checking Internet Connection...${RESET}"
-	@ping -c 1 8.8.8.8 > /dev/null 2>&1 || { echo -e "${RED}  [✘] No internet! Skipping git pull.${RESET}"; sleep 1; }
+def pkg_installed(package):
+    r = run(["dpkg", "-s", package])
+    return r.returncode == 0 and "Status: install ok installed" in r.stdout
 
-	@echo -e "${BLUE}  [⏳] Syncing with GitHub (Force Pull)...${RESET}"
-	@git fetch --all 2>/dev/null || true
-	@git reset --hard origin/main 2>/dev/null || echo -e "${YELLOW}  [⚠]  Not a git repo or no remote. Skipping.${RESET}"
-	@echo -e "${GREEN}  [✔] Repository synchronized!${RESET}"
-	@echo ""
+def pip_installed(import_name):
+    return subprocess.run(
+        [sys.executable, "-c", f"import {import_name}"],
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL
+    ).returncode == 0
 
-	@echo -e "${CYAN}  ═══════════════════════════════════════════════════════════════════${RESET}"
-	@echo -e "${YELLOW}  [🔥] LOADING THE RIPPER ENGINE...${RESET}"
-	@echo -e "${CYAN}  ┌────────────────────────────────────────────────────────────┐${RESET}"
-	@echo -e "${CYAN}  │${RESET} ${RED}██████████${RESET} ${GREEN}100%${RESET}"
-	@echo -e "${CYAN}  └────────────────────────────────────────────────────────────┘${RESET}"
-	@sleep 1
-	@echo -e "${GREEN}  [✔] Engine Loaded.${RESET}"
-	@echo ""
+def overwrite(text, newline=False):
+    end = "\n" if newline else ""
+    sys.stdout.write(f"\r\033[K{text}{end}")
+    sys.stdout.flush()
 
-	@echo -e "${CYAN}  ═══════════════════════════════════════════════════════════════════${RESET}"
-	@echo -e "${RED}  ⚡ EXECUTING ${TARGET}...${RESET}"
-	@echo -e "${CYAN}  ═══════════════════════════════════════════════════════════════════${RESET}"
-	@echo ""
-	@${PYTHON} ${TARGET}
+def animate(label, stop_event):
+    dots = ["     ", ".    ", "..   ", "...  ", ".... ", "....."]
+    i = 0
+    while not stop_event.is_set():
+        overwrite(f"  {p}[{h}>{p}] {label}{m}{dots[i % len(dots)]}")
+        i += 1
+        time.sleep(0.1)
 
-# ---- CLEANUP ----
-clean:
-	@clear
-	@echo -e "${CYAN}"
-	@echo "  ╔══════════════════════════════════════════════════════════════╗"
-	@echo "  ║       🧹  THE RIPPER - CLEANUP UTILITY                   ║"
-	@echo "  ╚══════════════════════════════════════════════════════════════╝"
-	@echo -e "${RESET}"
-	@echo -e "${YELLOW}  [i] Removing temporary files...${RESET}"
-	@rm -f Ripper.enc.py Ripper.bak.py 2>/dev/null || true
-	@rm -rf __pycache__ 2>/dev/null || true
-	@echo -e "${GREEN}  [✔] Cleanup complete!${RESET}"
+def with_animation(label, task):
+    stop = threading.Event()
+    t = threading.Thread(target=animate, args=(label, stop), daemon=True)
+    t.start()
+    try:
+        result = task()
+    finally:
+        stop.set()
+        t.join()
+    return result
 
-# ---- BACKUP ----
-backup:
-	@clear
-	@echo -e "${CYAN}"
-	@echo "  ╔══════════════════════════════════════════════════════════════╗"
-	@echo "  ║       📦  THE RIPPER - BACKUP UTILITY                     ║"
-	@echo "  ╚══════════════════════════════════════════════════════════════╝"
-	@echo -e "${RESET}"
-	@if [ -f ${TARGET} ]; then \
-		echo -e "${YELLOW}  [i] Backing up ${TARGET}...${RESET}"; \
-		cp ${TARGET} Ripper.bak.py; \
-		echo -e "${GREEN}  [✔] Backup saved as Ripper.bak.py${RESET}"; \
-	else \
-		echo -e "${RED}  [✘] Error: ${TARGET} not found!${RESET}"; \
-	fi
+# ---- HANDLER ----
+def handle_pkg(package):
+    installed = with_animation(f"Mengecek Package {package}", lambda: pkg_installed(package))
+    if installed:
+        overwrite(f"  {p}[{h}>{p}] Package {package} Terdeteksi", newline=True)
+        return
 
-# ---- ALL ----
-all: clean backup run
+    success = with_animation(
+        f"Mendownload Package {package}",
+        lambda: (
+            subprocess.run(["pkg", "install", "-y", package], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL),
+            pkg_installed(package)
+        )[1]
+    )
+
+    if success:
+        overwrite(f"  {p}[{h}>{p}] Package {package} Terinstal", newline=True)
+    else:
+        overwrite(f"  {p}[{m}>{p}] Package {package} Gagal Diinstall!", newline=True)
+        sys.exit(1)
+
+def handle_pip(display, import_name):
+    installed = with_animation(f"Mengecek Package {display}", lambda: pip_installed(import_name))
+    if installed:
+        overwrite(f"  {p}[{h}>{p}] Package {display} Terdeteksi", newline=True)
+        return
+
+    pkg_name = "pillow<11" if display.lower() == "pillow" else display
+    success = with_animation(
+        f"Mendownload Package {display}",
+        lambda: (
+            subprocess.run(
+                [sys.executable, "-m", "pip", "install", "--quiet", "--break-system-packages", pkg_name],
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL
+            ),
+            pip_installed(import_name)
+        )[1]
+    )
+
+    if success:
+        overwrite(f"  {p}[{h}>{p}] Package {display} Terinstal", newline=True)
+    else:
+        overwrite(f"  {p}[{m}>{p}] Package {display} Gagal Diinstall!", newline=True)
+        sys.exit(1)
+
+# ---- FIX PYTHON 3.14 ----
+def fix_python_version():
+    if sys.version_info >= (3, 14):
+        overwrite(f"  {p}[{m}>{p}] Python 3.14 Terdeteksi! Menjalankan Fix...", newline=True)
+        subprocess.run(["bash", "python313.sh"])
+        overwrite(f"  {p}[{h}>{p}] Python Berhasil Diperbaiki!", newline=True)
+
+# ---- GIT UPDATE ----
+def check_update(script_dir):
+    result = with_animation("Memeriksa Pembaruan", lambda: run(["git", "pull"], cwd=script_dir))
+    if result.returncode != 0:
+        overwrite(f"  {p}[{m}>{p}] Gagal Memeriksa Pembaruan!", newline=True)
+        return
+    output = result.stdout.lower() + result.stderr.lower()
+    if "already up to date" in output:
+        overwrite(f"  {p}[{h}>{p}] Tidak Ada Pembaruan", newline=True)
+    else:
+        overwrite(f"  {p}[{h}>{p}] Pembaruan Berhasil", newline=True)
+
+# ---- BANNER ----
+def banner():
+    os.system("clear")
+    print(f"""{a}
+╔═══════════════════════════════════════════════════════════╗
+║{p}  THE RIPPER - LAUNCHER V5.3 ULTIMATE                   {a}║
+║{p}  Auto Installer + Auto Fix Python 3.14                 {a}║
+║{p}  Wait a minute, don't spam button!                     {a}║
+╚═══════════════════════════════════════════════════════════╝
+""")
+
+# ---- MAIN ----
+def main():
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    banner()
+
+    # 1. Fix Python 3.14
+    fix_python_version()
+
+    # 2. Install Termux Packages
+    for pkg in PKG_PACKAGES:
+        handle_pkg(pkg)
+
+    # 3. Install PIP Packages
+    for display, imp in PIP_PACKAGES:
+        handle_pip(display, imp)
+
+    # 4. Git update
+    check_update(script_dir)
+
+    # 5. Jalankan Ripper.py atau loader.pyc
+    targets = ["Ripper.py", "loader.pyc"]
+    target = None
+    for t in targets:
+        path = os.path.join(script_dir, t)
+        if os.path.exists(path):
+            target = path
+            break
+
+    if not target:
+        print(f"{p}  [{m}>{p}] Tidak ada file Ripper.py atau loader.pyc!")
+        sys.exit(1)
+
+    print(f"{p}  [{h}>{p}] Menjalankan: {os.path.basename(target)}")
+    os.execv(sys.executable, [sys.executable, target])
+
+if __name__ == "__main__":
+    main()
