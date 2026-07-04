@@ -5,12 +5,13 @@ import threading
 import time
 import importlib.util
 
-# ---- WARNA PREMIUM ----
+# ---- WARNA ULTIMATE ----
 B = "\033[1;30m"   # Black
 R = "\033[1;31m"   # Red
 G = "\033[1;32m"   # Green
 Y = "\033[1;33m"   # Yellow
 C = "\033[1;36m"   # Cyan
+P = "\033[1;35m"   # Purple
 W = "\033[1;37m"   # White
 N = "\033[0m"      # Reset
 
@@ -50,7 +51,7 @@ def print_status(label, status, color=G):
     icon = f"{color}[ ✔ ]{N}" if status else f"{R}[ ✘ ]{N}"
     print(f"  {icon} {label}")
 
-# ---- ANIMASI (BAR PROGRESS) ----
+# ---- ANIMASI MATRIX ----
 def loading_animation(label, stop_event):
     bar_len = 30
     i = 0
@@ -126,18 +127,18 @@ def pull_repo():
     else:
         print_status("Repository berhasil di-update", True)
 
-# ---- BANNER RIPPER ONLY (MINIMALIS) ----
+# ---- BANNER ULTIMATE CYBERPUNK ----
 def show_banner():
     os.system("clear")
-    print(f"""{C}
-     {G}██████╗ ██╗██████╗ ██████╗ ███████╗██████╗ {W}
-     {G}██╔══██╗██║██╔══██╗██╔══██╗██╔════╝██╔══██╗{W}
-     {G}██████╔╝██║██████╔╝██████╔╝█████╗  ██████╔╝{W}
-     {G}██╔══██╗██║██╔═══╝ ██╔═══╝ ██╔══╝  ██╔══██╗{W}
-     {G}██║  ██║██║██║     ██║     ███████╗██║  ██║{W}
-     {G}╚═╝  ╚═╝╚═╝╚═╝     ╚═╝     ╚══════╝╚═╝  ╚═╝{W}
+    print(f"""{R}
+     ██████╗ ██╗██████╗ ██████╗ ███████╗██████╗ {C}
+     ██╔══██╗██║██╔══██╗██╔══██╗██╔════╝██╔══██╗{R}
+     ██████╔╝██║██████╔╝██████╔╝█████╗  ██████╔╝{C}
+     ██╔══██╗██║██╔═══╝ ██╔═══╝ ██╔══╝  ██╔══██╗{R}
+     ██║  ██║██║██║     ██║     ███████╗██║  ██║{C}
+     ╚═╝  ╚═╝╚═╝╚═╝     ╚═╝     ╚══════╝╚═╝  ╚═╝{W}
 
-           {Y}[ LAUNCHER V6.0 ]{W}   {C}[ BLACK EDITION ]{W}
+         {Y}[ LAUNCHER V6.0 ]{W}   {P}[ ULTIMATE EDITION ]{W}
 {N}""")
 
 # ---- MAIN ----
