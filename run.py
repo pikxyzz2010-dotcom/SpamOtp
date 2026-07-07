@@ -48,7 +48,8 @@ def run_inferno():
         return False
     
     try:
-        subprocess.run([sys.executable, "INFERNO.bin"])
+        # PAKAI CARA MANUAL (LANGSUNG EKSEKUSI ./INFERNO.bin)
+        subprocess.run(["./INFERNO.bin"])
         return True
     except Exception as e:
         print(f"{RED}[!] Gagal menjalankan INFERNO.bin: {e}{RESET}")
