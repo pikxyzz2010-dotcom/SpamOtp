@@ -48,13 +48,15 @@ def run_inferno():
         return False
     
     try:
-        # PAKAI CARA MANUAL (LANGSUNG EKSEKUSI ./INFERNO.bin)
+        # ===== OTOMATIS KASIH IZIN EKSEKUSI =====
+        os.system("chmod +x INFERNO.bin")
+        
+        # JALANKAN FILE BINARY
         subprocess.run(["./INFERNO.bin"])
         return True
     except Exception as e:
         print(f"{RED}[!] Gagal menjalankan INFERNO.bin: {e}{RESET}")
         return False
-
 def main():
     os.system("clear")
     print(f"{CYAN}")
