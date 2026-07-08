@@ -30,7 +30,7 @@ git clone https://github.com/pikxyzz2010-dotcom/SpamOtp.git
 cd SpamOtp
 
 # 3. Run the launcher
-python run.py
+make run
 ```
 
 
