@@ -2,40 +2,90 @@
   <img src="tampilan.jpg" alt="Tampilan" width="600">
 </p>
 
-<p align="center">
-  <img src="https://img.shields.io/badge/THE%20REAPER-OTP%20ENGINE-red?style=for-the-badge&logo=python" />
-  <img src="https://img.shields.io/badge/Platform-Termux-blue?style=for-the-badge&logo=android" />
-  <img src="https://img.shields.io/badge/Version-3.0-brightgreen?style=for-the-badge" />
-</p>
+# 🔥 INFERNO-X
 
-<h1 align="center">☠️ THE REAPER v3.0</h1>
-<p align="center"><i>"OP Tools! THE REAPER."</i></p>
+> **A modular all-in-one offensive toolkit designed for Termux.  
+> Clean UI. Brutal performance. Built for the shadows.**
 
 ---
 
-## 🩸 Apa Itu THE REAPER?
+## ⚡ Features
 
-The Reaper adalah tools termux yang dikembangkan untuk spam otp 
----
-
-## 🕯️ Fitur Kegelapan
-
-| 🩸 | Deskripsi |
-|----|-----------|
-| ⚰️ | **17 otp **  |
-| 📱 | **UI Responsif** — diperuntukkan bagi layar sempit Termux |
-| 🔐 | **Encrypt Proteksi** — mereka yang mencoba membongkar akan tersesat |
-| 🧠 | **Session Lock** — tak ada dua Reaper yang boleh berkeliaran |
-| 👿 | **Auto Countdown** — waktu tunggu sebelum serangan berikutnya |
+- **OTP Spammer** — Multi-endpoint payload delivery with adaptive delay & retry mechanism.
+- **OSINT Username Scanner** — Check username availability across 20+ platforms in seconds.
+- **Phishing Engine (X-PHISHER)** — Pre-integrated, battle-tested phishing module (auto-downloads on first use).
+- **IP Tracker** — Geolocation and ISP info retrieval.
+- **Web Scraper** — Lightweight website content fetcher.
+- **Custom UI Themes** — Choose between **Mixed** (Cyan, Green, Gold, Red) or **Pure** (Red, Cyan, Green, White, Gold) color schemes.
 
 ---
 
-## ⚰️ Instalasi
+## 🚀 Quick Install
 
 ```bash
-pkg update && pkg upgrade
-pkg install git python nano -y
-pip install requests urllib3 flask
-git clone https://github.com/pikxyzz2/SpamOtp
+# 1. Clone the repository
+git clone https://github.com/pikxyzz2010-dotcom/SpamOtp.git
+
+# 2. Enter the directory
 cd SpamOtp
-make run
+
+# 3. Run the launcher
+python run.py
+
+
+
+ℹ️ The launcher automatically detects your Python version and fixes compatibility issues (Python 3.14 → 3.13).
+
+
+🎮 Usage
+
+```
+[01] Spam OTP
+[02] IP Tracker
+[03] Upgrade to Premium
+[04] Scrape Web
+[05] Change Color Theme
+[06] Report Bug
+[07] OSINT Username Scanner
+[08] Create Link Phishing (X-PHISHER)
+[00] Terminate Session
+
+---
+
+🎨 Theming
+
+Change the UI look anytime via menu [05].
+
+· Pure Mode — One solid color (Red, Cyan, Green, White, Gold).
+· Mixed Mode — Dynamic cyberpunk color combinations.
+
+---
+
+---
+
+🧰 Requirements
+
+All dependencies are handled automatically by run.py.
+Just make sure you have a working Termux environment with internet access.
+
+---
+
+⚠️ Disclaimer
+
+This tool is developed for educational purposes and authorized penetration testing only.
+The author assumes no responsibility for any misuse or illegal activities performed using this toolkit.
+
+---
+
+📬 Contact
+
+· Author : Pikyxyz
+· GitHub : @pikxyzz2010-dotcom
+
+---
+
+INFERNO-X — Execute. Evade. Dominate.
+
+```
+
+---
