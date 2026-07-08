@@ -45,10 +45,11 @@ def run_inferno():
         return False
     try:
         os.system("chmod +x INFERNO.bin")
-        subprocess.run(["./INFERNO.bin"])
+        # PAKAI os.system, BUKAN subprocess.run
+        os.system("./INFERNO.bin")
         return True
     except KeyboardInterrupt:
-        print(f"{YELLOW}[i] User interrupted. Returning to menu...{RESET}")
+        # Ini gak akan pernah kepanggil karena os.system udah aman
         return True
     except Exception as e:
         print(f"{RED}[!] Error: {e}{RESET}")
