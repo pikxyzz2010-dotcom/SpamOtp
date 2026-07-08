@@ -31,7 +31,7 @@ cd SpamOtp
 
 # 3. Run the launcher
 python run.py
-
+```
 
 
 ℹ️ The launcher automatically detects your Python version and fixes compatibility issues (Python 3.14 → 3.13).
