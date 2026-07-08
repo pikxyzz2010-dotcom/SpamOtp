@@ -41,22 +41,19 @@ def run_fix():
         sys.exit(1)
 
 def run_inferno():
-    print(f"{CYAN}[+] Launching INFERNO-X...{RESET}")
     if not os.path.exists("INFERNO.bin"):
-        print(f"{RED}[!] File 'INFERNO.bin' tidak ditemukan!{RESET}")
-        print(f"{YELLOW}    Pastikan file 'INFERNO.bin' ada di folder ini.{RESET}")
         return False
-    
     try:
-        # ===== OTOMATIS KASIH IZIN EKSEKUSI =====
         os.system("chmod +x INFERNO.bin")
-        
-        # JALANKAN FILE BINARY
         subprocess.run(["./INFERNO.bin"])
         return True
+    except KeyboardInterrupt:
+        print(f"{YELLOW}[i] User interrupted. Returning to menu...{RESET}")
+        return True
     except Exception as e:
-        print(f"{RED}[!] Gagal menjalankan INFERNO.bin: {e}{RESET}")
+        print(f"{RED}[!] Error: {e}{RESET}")
         return False
+        
 def main():
     os.system("clear")
     print(f"{CYAN}")
