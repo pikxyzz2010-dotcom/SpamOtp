@@ -33,7 +33,7 @@ def run_fix():
     if os.path.exists("python313.sh"):
         subprocess.run(["bash", "python313.sh"])
         # Setelah fix, jalanin ulang run.py dengan python3.13
-        subprocess.run(["python3.13", "run.py"])
+        subprocess.run(["python3", "run.py"])
         sys.exit(0)
     else:
         print(f"{RED}[!] File 'python313.sh' tidak ditemukan!{RESET}")
