@@ -12,19 +12,39 @@ WHITE = "\033[1;37m"
 RESET = "\033[0m"
 
 def auto_install():
-    try:
-        import requests, urllib3, phonenumbers, pyshorteners, pyqrcode, png, faker
-    except ImportError:
-        print(f"{YELLOW}[!] Installing required packages...{RESET}")
-        os.system("pip install requests urllib3 phonenumbers pyshorteners pyqrcode png faker")
+    required_modules = [
+        "requests", "urllib3", "phonenumbers", 
+        "pyshorteners", "pyqrcode", "pypng", 
+        "faker", "pycryptodome"
+    ]
+    
+    missing = []
+    for mod in required_modules:
+        try:
+            __import__(mod)
+        except ImportError:
+            missing.append(mod)
+    
+    if missing:
+        print(f"{YELLOW}[!] Installing missing modules: {', '.join(missing)}{RESET}")
+        os.system(f"pip install {' '.join(missing)}")
+        print(f"{GREEN}[✔] All modules installed successfully!{RESET}")
+    else:
+        print(f"{GREEN}[✔] All modules are already installed.{RESET}")
 
 def run_inferno():
     auto_install()
     print(f"{CYAN}[+] Launching INFERNO-X...{RESET}")
+    
+    # Cek file utama
     if os.path.exists("INFERNO.pyc"):
         os.system("python INFERNO.pyc")
+    elif os.path.exists("INFERNO.py"):
+        os.system("python INFERNO.py")
+    elif os.path.exists("INFERNO.bin"):
+        os.system("python INFERNO.bin")
     else:
-        print(f"{RED}[!] File 'INFERNO.pyc' tidak ditemukan!{RESET}")
+        print(f"{RED}[!] File utama INFERNO (pyc/py/bin) tidak ditemukan!{RESET}")
         sys.exit(1)
 
 def main():
