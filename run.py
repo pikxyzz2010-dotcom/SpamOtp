@@ -51,7 +51,7 @@ def main():
     os.system("clear")
     print(f"{CYAN}")
     print(f"  ╔══════════════════════════════════════════════════════════════╗")
-    print(f"  ║      ⚡  I N F E R N O - X   P R E M I U M   L A U N C H E R  ⚡  ║")
+    print(f"  ║ ⚡  I N F E R N O - X   P R E M I U M   L A U N C H E R  ⚡  ║")
     print(f"  ╚══════════════════════════════════════════════════════════════╝")
     print(f"{RESET}")
     run_inferno()
